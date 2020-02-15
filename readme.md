@@ -13,15 +13,15 @@ and "Performance Monitoring Events").
 
 There are 3 distinct pieces of code in this repository:
 
-- `setcr4`: A kernel driver which configures the CPU CR4 register to enable
+- `setcr4`: A kernel driver which configures the CPU's CR4 register to enable
 user-mode code to read/write the performance counter registers.
-- `runsvc`: A user-mode process to load the above driver, and set the CPU flags.
+- `runsvc`: A user-mode process to load the above driver, and set the right CPU flags.
 - `testapp`: A sample program that uses the CPU perf counters enabled above.
 
 ## Building
 
-Ensure the Visual Studio C++ tool-set and the Windows DDK are installed. Then open
-a 64-bit developer command prompt and run `build.bat` from the root of the repo.
+Ensure the Visual Studio C++ compiler and the Windows DDK are installed. Then open
+a 64-bit developer command prompt and run `nmake` from the root of the repo.
 
 ## Notes
 
@@ -31,11 +31,12 @@ attach a kernel debugger to the system under test, which also disables it).
 
 ## Usage
 
-- Copy the 3 binary files to C:\temp
-- Open an Admin command prompt and change the current directory to C:\temp
+- After building, copy the binary files from `.\bin\debug` to `C:\temp`
+- Open an Admin command prompt and change the current directory to `C:\temp`.
 - Run the `runsvc.exe` utility, which should indicate the driver was loaded.
-- Press `e` to enable the Performance Counter Registers (PCRs). (The CR4 register value should change from `0x370678` to `0x370778`).
-- Run the code to test, which now should be able to make use of the counters.
+- Press `e` to enable the Performance Counter Registers (PCRs).
+  - (Bit 8 of the CR4 register should get set, e.g. from `0x370678` to `0x370778`).
+- Run the code to test, which now should be able to make use of the `RDPMC` opcode.
 - When done, disable the PCRs and unload the driver (press 'd' then 'x' in `runsvc.exe`).
 
 ## TODO

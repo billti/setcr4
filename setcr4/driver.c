@@ -21,7 +21,7 @@ DRIVER_DISPATCH DriverCreateClose;
 
 NTSTATUS DriverEntry(DRIVER_OBJECT* driver_object, UNICODE_STRING* registry_path) {
   NTSTATUS nt_status = STATUS_SUCCESS;
-  UNICODE_STRING device_name, dos_device_name;
+  UNICODE_STRING device_name;
   DEVICE_OBJECT* device_object = NULL;
 
   DbgPrint("DriverEntry for " DRIVER_NAME " called\n");
