@@ -33,6 +33,7 @@ echo "Building the test app"
 SET CL_OPTS=/Od /Zi /GS-
 SET LINK_OPTS=/opt:icf /opt:ref /incremental:no /nodefaultlib /entry:main /nologo
 SET LINK_LIBS=kernel32.lib advapi32.lib user32.lib
+ml64.exe /c /Zi /nologo ../testapp/pmc.asm
 cl %CL_OPTS% ../testapp/testapp.c /link %LINK_OPTS% %LINK_LIBS%
 
 popd
